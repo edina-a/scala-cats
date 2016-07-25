@@ -39,5 +39,40 @@ class FunctorSpec extends WordSpec with Matchers {
       val listOpt = Functor[List] compose Functor[Option]
       listOpt.map(List(Some(1), None, Some(3)))(_ + 1) should be(List(Some(2), None, Some(4)))
     }
+
+    // instance 를 만드려면 implicit
+    "my first option functor instance" in {
+//      implicit val optionInstance = new Functor[Option] {
+//        override def map[A, B](fa: Option[A])(f: (A) => B): Option[B] = {
+//          fa match {
+//            case Some(x) => Some(f(x))
+//            case None => None
+//          }
+//        }
+//      }
+//
+//      implicit val optionInstance2 = new Functor[Option] {
+//        override def map[A, B](fa: Option[A])(f: (A) => B): Option[B] = fa map f
+//      }
+//
+//      println(Functor[Option].map(Some(1))(_ + 1))
+    }
+
+    "my foo instance" in {
+      case class Foo[T](a:T)
+
+      import cats.syntax.functor._
+      val foo = Foo[Int](1)
+
+      implicit val fooFunctor = new Functor[Foo] {
+        override def map[A, B](fa: Foo[A])(f: (A) => B): Foo[B] = Foo(f(fa.a))
+      }
+
+      println(foo.map(_ + 10))
+      foo.map(_ + 10) shouldBe Functor[Foo].map(foo)(_+10)
+
+
+    }
+
   }
 }
