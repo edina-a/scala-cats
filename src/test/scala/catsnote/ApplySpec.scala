@@ -65,6 +65,9 @@ class ApplySpec extends WordSpec with Matchers {
 
     "apply list instance" in {
       implicit val listApplyInstance = new Apply[List] {
+        // ff : 박스에 들이있는 function
+        // fa : 박스에 들어있는 input 값
+
         override def ap[A, B](ff: List[(A) => B])(fa: List[A]): List[B] = {
           fa.flatMap(a => ff.map(f => f(a)))
         }
@@ -76,6 +79,13 @@ class ApplySpec extends WordSpec with Matchers {
         import cats.std.list.listInstance
         println(Apply[List].ap(List((x:Int)=>x.toString + "!!"))(List(1,2,3)))
       }
+    }
+    "tuple" in {
+      import cats.std.all._
+      // F[A], F[B] => F[(A,B)]
+      Apply[Option].tuple2(Some(1), Some(2)) should be(Some(1,2))
+      Apply[Option].tuple3(Some(1), Some(2), Some(3)) should be(Some(1,2,3))
+      Apply[List].tuple2(List(1), List("a","b","c")) should be(List((1,"a"),(1,"b"),(1,"c")))
     }
   }
 }
