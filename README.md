@@ -19,7 +19,7 @@ Monoid[String].combineAll(List()) should be("")
 
 ## Functor
 map(값을 꺼내어 f를 적용하고 다시 넣는 과정) 을 가짐   
-![functor](https://gift-s.kakaocdn.net/dn/gift/playground/functor.png)
+![functor](https://gift-s.kakaocdn.net/dn/gift/playground/functor2.png)
 ```scala
 val intToString: Int ⇒ String = _.toString
 Apply[Option].map(Some(1))(intToString) should be(Some("1"))
